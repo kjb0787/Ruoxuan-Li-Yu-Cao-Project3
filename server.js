@@ -1,10 +1,13 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
+const session = require('express-session');
 const app = express();
+const cors = require('cors');
+const path = require('path');
 
-const jobRouter = require('./controller/jobRouter');
-const userRouter = require('./controller/userRouter');
+const jobRouter = require('./backend/controller/jobRouter');
+const userRouter = require('./backend/controller/userRouter');
 
 
 // const mongoEndpoint = "mongodb+srv://banana777:banana777@" +
