@@ -87,9 +87,11 @@ router.post('/:id/unfavorite', authenticateToken, async (req, res) => {
     const job = await Job.findOne({ id: req.params.id });
     const user = await User.findOne({ username: req.username });
     if (job && user) {
-        user.favorites = user.favorites.filter(function (value, index, arr) {
-            return value === job._id;
-        })
+        for (let i = 0; i < user.favorites.length; i++) {
+            if (user.favorites[i] === job.id) {
+                user.favorites.splice(i, 1);
+            }
+        }
         const updateUser = await user.save();
         if (updateUser) {
             return res.status(200).send("Delete favorite successfully");
@@ -107,6 +109,12 @@ router.delete('/:id', authenticateToken, async (req, res) => {
     }
     const job = await Job.findOne({ _id: req.params.id });
     if (job) {
+        for (let i = 0; i < user.jobPosts.length; i++) {
+            if (user.jobPosts[i] === job.id) {
+                user.jobPosts.splice(i, 1);
+            }
+        }
+        await user.save();
         await job.remove();
         return res.send("Delete the job successfully. ");
     } else {
