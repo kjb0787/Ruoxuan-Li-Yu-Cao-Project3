@@ -1,6 +1,7 @@
 import './JobPane.css';
 import React from 'react';
 import { useNavigate } from 'react-router';
+import { Card } from 'react-bootstrap';
 
 export function JobPane(props) {
     const navigate = useNavigate();
@@ -16,15 +17,15 @@ export function JobPane(props) {
 
     return (
         <div class="searchResult" onClick={goToDetails}>
-            <div>
-                Job Title: {props.title}
-            </div>
-            <div>
-                Location: {props.location}
-            </div>
-            <div>
-                Company Name: {props.companyName}
-            </div>
+            <Card style={{ width: '18rem' }}>
+                <Card.Body>
+                    <Card.Title>Job Title: {props.title}</Card.Title>
+                    <Card.Subtitle className="mb-2 text-muted">Location: {props.location}</Card.Subtitle>
+                    <Card.Text>
+                        Company Name: {props.companyName}
+                    </Card.Text>
+                </Card.Body>
+            </Card>
         </div>
     );
 }
