@@ -63,7 +63,7 @@ export default function CreateJob() {
                     .then(response => {
                         const jobId = response.data.jobId;
                         console.log(jobId);
-                        navigate()
+                        navigate('/');
                     })
                     .catch(error => console.log(error))
             }>Submit</button>

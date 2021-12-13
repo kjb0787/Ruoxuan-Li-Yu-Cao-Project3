@@ -12,13 +12,13 @@ export default function JobDetail() {
     // console.log(location);
 
     const jobId = location.state.jobId;
-    // console.log(jobId);
+    console.log(jobId);
 
     const navigate = useNavigate();
 
     const findJob = () => {
         axios.get('/api/job/' + jobId)
-            .then(response => setJob(response.data))
+            .then(response => { setJob(response.data); console.log(response.data) })
             .catch(error => setJob({
                 title: 'No such job found',
                 location: "N/A",

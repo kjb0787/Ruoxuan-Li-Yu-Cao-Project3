@@ -12,8 +12,8 @@ export default function SignIn() {
         password: '',
         username: '',
     });
-
-    const originalPath = location.state.path;
+    console.log(location.state);
+    const originalPath = location.state ? location.state.path : '/';
 
     return (
         <div>

@@ -64,7 +64,8 @@ router.put('/:id', authenticateToken, async (req, res) => {
 });
 
 router.get('/:id', async (req, res) => {
-    const job = await Job.findOne({ id: req.params.id });
+    const job = await Job.findOne({ _id: req.params.id });
+    console.log(job);
     if (job) {
         return res.status(200).send(job);
     }
@@ -72,7 +73,7 @@ router.get('/:id', async (req, res) => {
 });
 
 router.post('/:id/favorite', authenticateToken, async (req, res) => {
-    const job = await Job.findOne({ id: req.params.id });
+    const job = await Job.findOne({ _id: req.params.id });
     const user = await User.findOne({ username: req.username });
     if (job && user) {
         user.favorites.push(job._id);
@@ -84,11 +85,11 @@ router.post('/:id/favorite', authenticateToken, async (req, res) => {
 
 
 router.post('/:id/unfavorite', authenticateToken, async (req, res) => {
-    const job = await Job.findOne({ id: req.params.id });
+    const job = await Job.findOne({ _id: req.params.id });
     const user = await User.findOne({ username: req.username });
     if (job && user) {
         for (let i = 0; i < user.favorites.length; i++) {
-            if (user.favorites[i] === job.id) {
+            if (user.favorites[i] === job._id) {
                 user.favorites.splice(i, 1);
             }
         }
@@ -110,7 +111,7 @@ router.delete('/:id', authenticateToken, async (req, res) => {
     const job = await Job.findOne({ _id: req.params.id });
     if (job) {
         for (let i = 0; i < user.jobPosts.length; i++) {
-            if (user.jobPosts[i] === job.id) {
+            if (user.jobPosts[i] === job._id) {
                 user.jobPosts.splice(i, 1);
             }
         }
