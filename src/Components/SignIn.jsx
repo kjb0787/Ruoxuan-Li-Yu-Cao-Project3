@@ -1,17 +1,19 @@
 import axios from "axios";
 import { useState } from "react";
 import { Navigation } from "./Navigation";
-import { useNavigate } from 'react-router';
+import { useNavigate, useLocation } from 'react-router';
 
 
 export default function SignIn() {
-
+    const location = useLocation();
     const navigate = useNavigate();
 
     const [userData, setUserData] = useState({
         password: '',
         username: '',
     });
+
+    const originalPath = location.state.path;
 
     return (
         <div>
@@ -47,7 +49,7 @@ export default function SignIn() {
                             if (response.data.token) {
                                 localStorage.setItem("username", JSON.stringify(response.data))
                             }
-                            navigate("/")
+                            navigate(originalPath)
                         })
                         .catch(error => console.log(error));
                 }}>Sign in</button>
