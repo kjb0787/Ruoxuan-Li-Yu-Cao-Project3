@@ -1,47 +1,94 @@
 import axios from "axios";
-import { useState } from "react";
+import React, { useState } from "react";
 import { Navigation } from "./Navigation";
 import { useNavigate } from 'react-router';
 
 export default function Registration() {
     const navigate = useNavigate();
 
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
+    const [userData, setUserData] = useState({
+        password: '',
+        username: '',
+    });
+
     return (
         <div>
             <div>
                 <Navigation />
             </div>
-            <form className="container">
+            {/* <form className="container">
+            // TODO: why li cannot work
                 <div className="form-container">
                     <h1>Register</h1>
                     <li>
                         <label>
                             Username:
                         </label>
-                        <input name="username" id="username" onChange={(e) => setUsername(e.target.value)}>
-                        </input>
+                        <input name="username" id="username" onChange={(e) => {
+                            const username = e.target.value;
+                            setUserData({
+                                ...userData,
+                                username: username
+                            });
+
+                        }} />
                     </li>
                     <li>
                         <label>
                             Password:
                         </label>
-                        <input type="password" name="password" id="password" onChange={(e) => setPassword(e.target.value)}>
-                        </input>
+                        <input type="password" id="password" onChange={(e) => {
+                            const password = e.target.value;
+                            setUserData({
+                                ...userData,
+                                password: password
+                            })
+                        }} />
                     </li>
-                    <button type="submit" className="button" onClick={() => {
-                        axios.post('/api/user/register', { username: username, password: password })
+                    <button onClick={() => {
+                        axios.post('/api/user/register', userData)
                             .then(response => {
-                                console.log(response)
-                                navigate("/favorites")
+                                navigate("/favorites");
+                                console.log("lol");
+                                console.log(response);
                             })
                             .catch(error => console.log(error));
                     }}>Register</button>
                 </div>
-            </form>
+            </form> */}
+            <div className="form-container">
+                    <h1>Register</h1>
+                        <h5>
+                            Username:
+                        </h5>
+                        <input name="username" id="username" onChange={(e) => {
+                            const username = e.target.value;
+                            setUserData({
+                                ...userData,
+                                username: username
+                            });
+
+                        }} />
+                        <h5>
+                            Password:
+                        </h5>
+                        <input type="password" id="password" onChange={(e) => {
+                            const password = e.target.value;
+                            setUserData({
+                                ...userData,
+                                password: password
+                            })
+                        }} />
+                    <button onClick={() => {
+                        axios.post('/api/user/register', userData)
+                            .then(response => {
+                                navigate("/favorites");
+                                console.log("lol");
+                                console.log(response);
+                            })
+                            .catch(error => console.log(error));
+                    }}>Register</button>
+                </div>
         </div>
-
-
     );
 }

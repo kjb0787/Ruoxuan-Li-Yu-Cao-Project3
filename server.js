@@ -9,11 +9,7 @@ const path = require('path');
 const jobRouter = require('./backend/controller/jobRouter');
 const userRouter = require('./backend/controller/userRouter');
 
-
-// const mongoEndpoint = "mongodb+srv://banana777:banana777@" +
-//     "webfinalproject.n8m5z.mongodb.net/WebFinalProject?retryWrites=true&w=majority"
-
-const mongoEndpoint = process.env.MONGODB_URI || 'mongodb://localhost:27017/jobboard';
+const mongoEndpoint = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/jobboard';
 
 mongoose
     .connect(mongoEndpoint, { useNewUrlParser: true })
@@ -22,6 +18,7 @@ mongoose
     });
 
 const db = mongoose.connection;
+
 db.on('error', console.error.bind(console, 'MongoDB connection error:'))
 
 app.use(express.json());
@@ -31,6 +28,8 @@ app.use(cookieParser());
 
 app.use('/api/job', jobRouter);
 app.use('/api/user', userRouter);
+app.use(cors());
+
 
 // render any “built” React code when go to your node server
 // easily deploy to Heroku 
