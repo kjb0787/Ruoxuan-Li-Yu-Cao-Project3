@@ -57,38 +57,38 @@ export default function Registration() {
                 </div>
             </form> */}
             <div className="form-container">
-                    <h1>Register</h1>
-                        <h5>
-                            Username:
-                        </h5>
-                        <input name="username" id="username" onChange={(e) => {
-                            const username = e.target.value;
-                            setUserData({
-                                ...userData,
-                                username: username
-                            });
+                <h1>Register</h1>
+                <h5>
+                    Username:
+                </h5>
+                <input name="username" id="username" onChange={(e) => {
+                    const username = e.target.value;
+                    setUserData({
+                        ...userData,
+                        username: username
+                    });
 
-                        }} />
-                        <h5>
-                            Password:
-                        </h5>
-                        <input type="password" id="password" onChange={(e) => {
-                            const password = e.target.value;
-                            setUserData({
-                                ...userData,
-                                password: password
-                            })
-                        }} />
-                    <button onClick={() => {
-                        axios.post('/api/user/register', userData)
-                            .then(response => {
-                                navigate("/favorites");
-                                console.log("lol");
-                                console.log(response);
-                            })
-                            .catch(error => console.log(error));
-                    }}>Register</button>
-                </div>
+                }} />
+                <h5>
+                    Password:
+                </h5>
+                <input type="password" id="password" onChange={(e) => {
+                    const password = e.target.value;
+                    setUserData({
+                        ...userData,
+                        password: password
+                    })
+                }} />
+                <button onClick={() => {
+                    axios.post('/api/user/register', userData)
+                        .then(response => {
+                            navigate("/favorites");
+                            console.log("lol");
+                            console.log(response);
+                        })
+                        .catch(error => console.log(error));
+                }}>Register</button>
+            </div>
         </div>
     );
 }

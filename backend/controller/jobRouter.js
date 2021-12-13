@@ -26,7 +26,7 @@ router.post('/', authenticateToken, async (req, res) => {
     user.jobPosts.push(job._id);
     const updateUser = await user.save();
     if (newJob && updateUser) {
-        return res.status(201).send("Job Id " + job._id);
+        return res.status(201).send({ jobId: job._id });
     } else {
         return res.status(500).send("Database errors");
     }

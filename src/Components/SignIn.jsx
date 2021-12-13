@@ -7,41 +7,51 @@ import { useNavigate } from 'react-router';
 export default function SignIn() {
 
     const navigate = useNavigate();
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
+
+    const [userData, setUserData] = useState({
+        password: '',
+        username: '',
+    });
 
     return (
         <div>
             <div>
                 <Navigation />
             </div>
-            <form className="container">
-                <div className="form-container">
-                    <h1>Sign In</h1>
-                    <li>
-                        <label>
-                            Username:
-                        </label>
-                        <input name="username" id="username" onChange={(e) => setUsername(e.target.value)}>
-                        </input>
-                    </li>
-                    <li>
-                        <label>
-                            Password:
-                        </label>
-                        <input type="password" name="password" id="password" onChange={(e) => setPassword(e.target.value)}>
-                        </input>
-                    </li>
-                    <button type="submit" className="button" onClick={() => {
-                        axios.post('/api/user/signin', { username: username, password: password })
-                            .then(response => {
-                                console.log(response)
-                                navigate("/favorites")
-                            })
-                            .catch(error => console.log(error));
-                    }}>Sign In</button>
-                </div>
-            </form>
+            <div className="form-container">
+                <h1>Sign in</h1>
+                <h5>
+                    Username:
+                </h5>
+                <input name="username" id="username" onChange={(e) => {
+                    const username = e.target.value;
+                    setUserData({
+                        ...userData,
+                        username: username
+                    });
+
+                }} />
+                <h5>
+                    Password:
+                </h5>
+                <input type="password" id="password" onChange={(e) => {
+                    const password = e.target.value;
+                    setUserData({
+                        ...userData,
+                        password: password
+                    })
+                }} />
+                <button onClick={() => {
+                    axios.post('/api/user/signin', userData)
+                        .then(response => {
+                            if (response.data.token) {
+                                localStorage.setItem("username", JSON.stringify(response.data))
+                            }
+                            navigate("/")
+                        })
+                        .catch(error => console.log(error));
+                }}>Sign in</button>
+            </div>
         </div>
     );
 }

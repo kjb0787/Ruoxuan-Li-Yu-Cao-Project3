@@ -33,13 +33,10 @@ router.post('/register', async (req, res) => {
 });
 
 router.post('/signin', async (req, res) => {
-    console.log("Sign in " + req.body);
     const user = await User.findOne({ username: req.body.username });
-    console.log("Sign in " + user);
     if (user && (await bcrypt.compare(req.body.password, user.password))) {
         const token = jwt.sign({ username: user.username }, "secret_token", { expiresIn: '14d' });
-        console.log(token);
-        return res.cookie('token', token, { httpOnly: true }).status(200).send(user);
+        return res.send({ token: token });
     }
     return res.status(401).send({ message: 'Invalid username or password.' });
 });
