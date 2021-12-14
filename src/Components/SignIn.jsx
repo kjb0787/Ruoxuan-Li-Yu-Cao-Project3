@@ -3,7 +3,6 @@ import { useState } from "react";
 import { Navigation } from "./Navigation";
 import { useNavigate, useLocation } from 'react-router';
 
-
 export default function SignIn() {
     const location = useLocation();
     const navigate = useNavigate();
@@ -47,7 +46,8 @@ export default function SignIn() {
                     axios.post('/api/user/signin', userData)
                         .then(response => {
                             if (response.data.token) {
-                                localStorage.setItem("username", JSON.stringify(response.data))
+                                localStorage.setItem("loggedIn", JSON.stringify(userData.username));
+                                localStorage.setItem("username", JSON.stringify(response.data));
                             }
                             navigate(originalPath)
                         })

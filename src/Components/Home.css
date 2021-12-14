@@ -9,6 +9,8 @@
     display: flex;
 }
 
+/* resource: https://codepen.io/kocsten*/
+
 .glow-on-hover {
     width: 220px;
     height: 50px;
