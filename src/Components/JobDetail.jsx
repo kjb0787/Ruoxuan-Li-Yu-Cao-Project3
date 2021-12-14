@@ -47,7 +47,17 @@ export default function JobDetail() {
         if (username.replace(/"/g, "") === job.creatorName) {
             return (<Button variant="primary" onClick={
                 () => {
-                    navigate('/create') // todo
+                    navigate('/create', {
+                        state: {
+                            jobId: jobId,
+                            title: job.title,
+                            companyName: job.companyName,
+                            location: job.location,
+                            description: job.description,
+                            contact: job.contact,
+                            website: job.website,
+                        }
+                    });
                 }
             }>Modify</Button>)
         }

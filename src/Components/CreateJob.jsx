@@ -1,19 +1,50 @@
 import axios from "axios";
 import { useState } from "react";
 import { Navigation } from "./Navigation";
-import { useNavigate } from 'react-router';
+import { useNavigate, useLocation } from 'react-router';
 import { getToken } from "../util/auth";
 
-export default function CreateJob() {
+export default function CreateJob(props) {
     const navigate = useNavigate();
+    const location = useLocation();
+    //const jobId = location.state.jobId;
     const [jobData, setJobData] = useState({
-        title: '',
-        companyName: '',
-        location: '',
-        description: '',
-        contact: '',
-        website: '',
+        title: location.state ? location.state.title : '',
+        companyName: location.state ? location.state.companyName : '',
+        location: location.state ? location.state.location : '',
+        description: location.state ? location.state.description : '',
+        contact: location.state ? location.state.contact : '',
+        website: location.state ? location.state.website : '',
     });
+
+    function displaySubmit() {
+        if (!location.state) {
+            return (<button onClick={
+                () => axios.post('/api/job', jobData, getToken())
+                    .then(response => {
+                        const jobId = response.data.jobId;
+                        console.log(jobId);
+                        navigate('/');
+                    })
+                    .catch(error => {
+                        console.log(error)
+                        setError("You are not Logged In!!!")
+                    })
+            }>Submit</button>);
+        } else {
+            return (<button onClick={
+                () => axios.put('/api/job/' + location.state.jobId, jobData, getToken())
+                    .then(response => {
+                        console.log(response);
+                        navigate('/');
+                    })
+                    .catch(error => {
+                        console.log(error)
+                        setError("You are not Logged In!!!")
+                    })
+            }>Submit</button>);
+        }
+    }
 
     const [errorMsg, setError] = useState("");
 
@@ -63,19 +94,7 @@ export default function CreateJob() {
                     ...jobData,
                     website: e.target.value
                 })}></input>
-            <button onClick={
-                () => axios.post('/api/job', jobData, getToken())
-                    .then(response => {
-                        const jobId = response.data.jobId;
-                        console.log(jobId);
-                        navigate('/');
-                    })
-                    .catch(error => {
-                        console.log(error)
-                        setError("You are not Logged In!!!")
-                    })
-            }>Submit</button>
-
+            {displaySubmit()}
         </div>
     );
 }

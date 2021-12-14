@@ -37,24 +37,12 @@ router.post('/', authenticateToken, async (req, res) => {
 router.put('/:id', authenticateToken, async (req, res) => {
     const job = await Job.findOne({ _id: req.params.id });
     // todo: update the format later
-    if (req.body.title) {
-        job.title = req.body.title;
-    }
-    if (req.body.companyName) {
-        job.companyName = req.body.companyName;
-    }
-    if (req.body.location) {
-        job.location = req.body.location;
-    }
-    if (req.body.description) {
-        job.description = req.body.description;
-    }
-    if (req.body.contact) {
-        job.contact = req.body.contact;
-    }
-    if (req.body.website) {
-        job.website = req.body.website;
-    }
+    job.title = req.body.title;
+    job.companyName = req.body.companyName;
+    job.location = req.body.location;
+    job.description = req.body.description;
+    job.contact = req.body.contact;
+    job.website = req.body.website;
     job.postDate = new Date().toISOString().slice(0, 10); //todo: update date format
     const updatedJob = await job.save();
     if (updatedJob) {
