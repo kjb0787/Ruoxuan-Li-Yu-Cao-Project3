@@ -13,7 +13,6 @@ export default function CreateJob() {
         description: '',
         contact: '',
         website: '',
-        token: getToken()
     });
 
     const [errorMsg, setError] = useState("");
@@ -65,7 +64,7 @@ export default function CreateJob() {
                     website: e.target.value
                 })}></input>
             <button onClick={
-                () => axios.post('/api/job', jobData)
+                () => axios.post('/api/job', jobData, getToken())
                     .then(response => {
                         const jobId = response.data.jobId;
                         console.log(jobId);
