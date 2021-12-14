@@ -18,7 +18,10 @@ export default function JobDetail() {
 
     const findJob = () => {
         axios.get('/api/job/' + jobId)
-            .then(response => { setJob(response.data); console.log(response.data) })
+            .then(response => { 
+                setJob(response.data); 
+                // console.log(response.data) 
+            })
             .catch(error => setJob({
                 title: 'No such job found',
                 location: "N/A",
