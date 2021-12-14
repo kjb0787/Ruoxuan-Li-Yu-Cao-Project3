@@ -20,6 +20,7 @@ router.post('/', authenticateToken, async (req, res) => {
         contact: req.body.contact,
         website: req.body.website,
         postDate: new Date().toISOString().slice(0, 10),
+        creatorName: user.username,
     });
 
     const newJob = await job.save();

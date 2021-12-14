@@ -12,7 +12,7 @@ export default function SignIn() {
         password: '',
         username: '',
     });
-    console.log(location.state);
+    // console.log(location.state);
     const originalPath = location.state ? location.state.path : '/';
 
     return (

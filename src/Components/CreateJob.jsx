@@ -16,11 +16,17 @@ export default function CreateJob() {
         token: getToken()
     });
 
+    const [errorMsg, setError] = useState("");
+
     return (
         <div>
             <div>
                 <Navigation />
             </div>
+            <h1>
+                {errorMsg}
+            </h1>
+
             <h5>Job Title:</h5>
             <input value={jobData.title}
                 onChange={e => setJobData({
@@ -65,8 +71,12 @@ export default function CreateJob() {
                         console.log(jobId);
                         navigate('/');
                     })
-                    .catch(error => console.log(error))
+                    .catch(error => {
+                        console.log(error)
+                        setError("You are not Logged In!!!")
+                    })
             }>Submit</button>
+
         </div>
     );
 }
