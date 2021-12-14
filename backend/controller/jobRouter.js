@@ -73,6 +73,21 @@ router.get('/:id', async (req, res) => {
     return res.status(404).send("Job doesn't exist.");
 });
 
+
+router.get('/:id/isfavorite', authenticateToken, async (req, res) => {
+    const job = await Job.findOne({ _id: req.params.id });
+    const user = await User.findOne({ username: req.username });
+    if (job && user) {
+        for (let i = 0; i < user.favorites.length; i++) {
+            if (job._id.equals(user.favorites[i])) {
+                return res.send(true);
+            }
+        }
+        return res.send(false);
+    }
+    return res.status(404).send("Job doesn't exist.");
+});
+
 router.post('/:id/favorite', authenticateToken, async (req, res) => {
     const job = await Job.findOne({ _id: req.params.id });
     const user = await User.findOne({ username: req.username });
@@ -90,7 +105,7 @@ router.post('/:id/unfavorite', authenticateToken, async (req, res) => {
     const user = await User.findOne({ username: req.username });
     if (job && user) {
         for (let i = 0; i < user.favorites.length; i++) {
-            if (user.favorites[i] === job._id) {
+            if (job._id.equals(user.favorites[i])) {
                 user.favorites.splice(i, 1);
             }
         }

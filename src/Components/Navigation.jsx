@@ -3,11 +3,11 @@ import React from 'react';
 import { Navbar, Nav, Container } from 'react-bootstrap';
 import { useNavigate } from 'react-router';
 
+
 export function Navigation() {
     const navigate = useNavigate();
 
     const username = localStorage.getItem("loggedIn");
-    console.log("username in navigation: " + username);
 
     const createNav = () => {
         if (username) return (<Nav.Link href="/create">Create</Nav.Link>);
@@ -16,6 +16,7 @@ export function Navigation() {
     const favNav = () => {
         if (username) return (<Nav.Link href="/favorites">Favorites</Nav.Link>);
     }
+
 
     const navigateTo = (path) => {
         navigate(path, {
@@ -45,6 +46,8 @@ export function Navigation() {
                 <Nav.Link onClick={() => {
                     if (username) {
                         // TODO: log out
+                        localStorage.removeItem("loggedIn");
+                        localStorage.removeItem("username");
                         navigateTo('/signin');
                     } else {
                         navigateTo('/signin');

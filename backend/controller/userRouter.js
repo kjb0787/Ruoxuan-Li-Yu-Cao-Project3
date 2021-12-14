@@ -25,7 +25,6 @@ router.post('/register', async (req, res) => {
     const newUser = await user.save();
     const token = jwt.sign({ username: user.username }, "secret_token", { expiresIn: '14d' });
     if (newUser) {
-        // console.log(user);
         return res.cookie('token', token, { httpOnly: true }).status(201).send("User Id " + user._id);
     } else {
         return res.status(500).send("Database errors");
@@ -47,7 +46,11 @@ router.get('/favorites', authenticateToken, async (req, res) => {
         return res.status(401).send("Unauthorized");
     }
     // todo: add json format of job lists
-    return res.status(200).send(user.favorites);
+    const jobs = [];
+    for (let i = 0; i < user.favorites.length; i++) {
+        jobs.push(await Job.findOne({ _id: user.favorites[i] }));
+    }
+    return res.status(200).send(jobs);
 });
 
 

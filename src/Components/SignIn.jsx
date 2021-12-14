@@ -49,7 +49,7 @@ export default function SignIn() {
                                 localStorage.setItem("loggedIn", JSON.stringify(userData.username));
                                 localStorage.setItem("username", JSON.stringify(response.data));
                             }
-                            navigate(originalPath)
+                            navigate('/')
                         })
                         .catch(error => console.log(error));
                 }}>Sign in</button>

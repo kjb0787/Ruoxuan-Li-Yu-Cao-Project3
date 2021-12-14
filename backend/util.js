@@ -2,7 +2,6 @@ const jwt = require('jsonwebtoken');
 
 module.exports = function (req, res, next) {
     const token = req.headers.authorization;
-    console.log(token);
     if (!token) {
         res.status(401).send("Unauthorized");
     } else {
@@ -12,8 +11,6 @@ module.exports = function (req, res, next) {
             if (err) {
                 res.status(401).send("Invalid token");
             }
-            console.log(req.username);
-            console.log(decode);
             req.username = decode.username;
             next();
         });
