@@ -36,14 +36,13 @@ router.post('/', authenticateToken, async (req, res) => {
 // user can modify jobs that they created
 router.put('/:id', authenticateToken, async (req, res) => {
     const job = await Job.findOne({ _id: req.params.id });
-    // todo: update the format later
     job.title = req.body.title;
     job.companyName = req.body.companyName;
     job.location = req.body.location;
     job.description = req.body.description;
     job.contact = req.body.contact;
     job.website = req.body.website;
-    job.postDate = new Date().toISOString().slice(0, 10); //todo: update date format
+    job.postDate = new Date().toISOString().slice(0, 10);
     const updatedJob = await job.save();
     if (updatedJob) {
         return res.status(201).send(job);
@@ -54,7 +53,6 @@ router.put('/:id', authenticateToken, async (req, res) => {
 
 router.get('/:id', async (req, res) => {
     const job = await Job.findOne({ _id: req.params.id });
-    console.log(job);
     if (job) {
         return res.status(200).send(job);
     }

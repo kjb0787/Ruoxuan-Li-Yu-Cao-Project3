@@ -44,35 +44,41 @@ export default function JobDetail() {
     }
 
     function displayModify() {
-        if (username.replace(/"/g, "") === job.creatorName) {
-            return (<Button variant="primary" onClick={
-                () => {
-                    navigate('/create', {
-                        state: {
-                            jobId: jobId,
-                            title: job.title,
-                            companyName: job.companyName,
-                            location: job.location,
-                            description: job.description,
-                            contact: job.contact,
-                            website: job.website,
-                        }
-                    });
-                }
-            }>Modify</Button>)
+        if (username) {
+            if (username.replace(/"/g, "") === job.creatorName) {
+                return (<Button variant="primary" onClick={
+                    () => {
+                        navigate('/create', {
+                            state: {
+                                jobId: jobId,
+                                title: job.title,
+                                companyName: job.companyName,
+                                location: job.location,
+                                description: job.description,
+                                contact: job.contact,
+                                website: job.website,
+                            }
+                        });
+                    }
+                }>Modify</Button>)
+            }
         }
+
     }
 
     function displayDelete() {
-        if (username.replace(/"/g, "") === job.creatorName) {
-            return (<Button variant="primary" onClick={
-                () => {
-                    axios.delete('/api/job/' + jobId, getToken())
-                        .then(response => { navigate('/') })
-                        .catch(error => console.log(getToken()));
-                }
-            }>Delete</Button>)
+        if (username) {
+            if (username.replace(/"/g, "") === job.creatorName) {
+                return (<Button variant="primary" onClick={
+                    () => {
+                        axios.delete('/api/job/' + jobId, getToken())
+                            .then(response => { navigate('/') })
+                            .catch(error => console.log(getToken()));
+                    }
+                }>Delete</Button>)
+            }
         }
+
     }
 
 

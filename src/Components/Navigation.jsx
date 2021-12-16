@@ -31,7 +31,6 @@ export function Navigation() {
         <Container>
             <Nav className="me-auto">
                 <Nav.Link href="/">Home</Nav.Link>
-                <Nav.Link href="/search">Search</Nav.Link>
                 {createNav()}
                 {favNav()}
             </Nav>
@@ -52,7 +51,7 @@ export function Navigation() {
                     } else {
                         navigateTo('/signin');
                     }
-                }}>{username ? 'Logout' : 'LogIn'}</Nav.Link>
+                }}>{username ? 'Logout' : 'Login'}</Nav.Link>
             </Nav>
         </Container>
     </Navbar>);

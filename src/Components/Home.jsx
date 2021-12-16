@@ -1,23 +1,47 @@
 import { Navigation } from "./Navigation";
-import { useNavigate } from 'react-router';
-import React, { useState } from "react";
+import { useState } from 'react';
+import axios from 'axios';
 import './Home.css';
+import { JobPane } from "./JobPane";
 
 export default function Home() {
     const [formInput, setFormInput] = useState('');
+    const [jobs, setJobs] = useState([]);
     const [errorMsg, setError] = useState(null);
-    const navigate = useNavigate();
 
     function onSearchButtonClick() {
-        navigate("/search");
+        if (!formInput) {
+            setError("You must type in a job title.");
+            return;
+        }
+
+        axios.get('/api/job/?keyword=' + formInput)
+            .then(response => setJobs(response.data))
+            .catch(error => setJobs([{
+                title: 'No such job found',
+                location: "N/A",
+                companyName: "N/A"
+            }]));
+    }
+
+    const searchComponents = [];
+    if (jobs.length === 0) {
+        // searchComponents.push((<JobPane title="No Such Job" location="N/A" companyName="N/A" />));
+    } else {
+        jobs.forEach((job) => {
+            searchComponents.push((<JobPane title={job.title}
+                location={job.location}
+                companyName={job.companyName}
+                jobId={job._id} />));
+        });
     }
 
     return (
         <div>
             <Navigation />
-            <div class="searchContainer">
+            {errorMsg}
+            <div class="searchSectionContainer">
                 <div class="searchSection">
-                    {errorMsg}
                     <input type='text' value={formInput}
                         onChange={(e) => {
                             setError(null);
@@ -27,6 +51,10 @@ export default function Home() {
                         Search for Job
                     </button>
                 </div>
+            </div>
+
+            <div class="searchResContainer">
+                {searchComponents}
             </div>
         </div>
     );

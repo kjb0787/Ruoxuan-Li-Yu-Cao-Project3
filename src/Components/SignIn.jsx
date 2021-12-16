@@ -1,25 +1,35 @@
 import axios from "axios";
 import { useState } from "react";
 import { Navigation } from "./Navigation";
-import { useNavigate, useLocation } from 'react-router';
+import { useNavigate } from 'react-router';
 
 export default function SignIn() {
-    const location = useLocation();
+    // const location = useLocation();
     const navigate = useNavigate();
+    const [errorMsg, setErrorMsg] = useState("");
 
     const [userData, setUserData] = useState({
         password: '',
         username: '',
     });
     // console.log(location.state);
-    const originalPath = location.state ? location.state.path : '/';
+    // const originalPath = location.state ? location.state.path : '/';
+
+    function displayErrorMsg() {
+        if (errorMsg.length > 0) {
+            return (<div className="alert alert-warning">
+                {errorMsg}
+            </div>);
+        }
+    }
 
     return (
         <div>
             <div>
                 <Navigation />
             </div>
-            <div className="form-container">
+            <div className="container">
+                {displayErrorMsg()}
                 <h1>Sign in</h1>
                 <h5>
                     Username:
@@ -30,7 +40,6 @@ export default function SignIn() {
                         ...userData,
                         username: username
                     });
-
                 }} />
                 <h5>
                     Password:
@@ -42,6 +51,7 @@ export default function SignIn() {
                         password: password
                     })
                 }} />
+                <div></div>
                 <button onClick={() => {
                     axios.post('/api/user/signin', userData)
                         .then(response => {
@@ -49,9 +59,10 @@ export default function SignIn() {
                                 localStorage.setItem("loggedIn", JSON.stringify(userData.username));
                                 localStorage.setItem("username", JSON.stringify(response.data));
                             }
+                            console.log(response.data);
                             navigate('/')
                         })
-                        .catch(error => console.log(error));
+                        .catch(error => { setErrorMsg(error.response.data); console.log(error) });
                 }}>Sign in</button>
             </div>
         </div>

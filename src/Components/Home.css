@@ -9,6 +9,14 @@
     display: flex;
 }
 
+.searchSectionContainer {
+    display: flex;
+    justify-content: center;
+    height: 40vh;
+    align-items: center;
+}
+
+
 /* resource: https://codepen.io/kocsten*/
 
 .glow-on-hover {

@@ -17,18 +17,27 @@ export default function CreateJob(props) {
         website: location.state ? location.state.website : '',
     });
 
+
+    // const goToDetails = (jobId) => {
+    //     navigate('/job', {
+    //         state: {
+    //             jobId: jobId
+    //         }
+    //     });
+    // }
+
     function displaySubmit() {
         if (!location.state) {
             return (<button onClick={
                 () => axios.post('/api/job', jobData, getToken())
                     .then(response => {
                         const jobId = response.data.jobId;
-                        console.log(jobId);
+                        console.log(jobId + " in res");
                         navigate('/');
+                        // goToDetails(jobId);
                     })
                     .catch(error => {
                         console.log(error)
-                        setError("You are not Logged In!!!")
                     })
             }>Submit</button>);
         } else {
@@ -40,61 +49,60 @@ export default function CreateJob(props) {
                     })
                     .catch(error => {
                         console.log(error)
-                        setError("You are not Logged In!!!")
                     })
             }>Submit</button>);
         }
     }
-
-    const [errorMsg, setError] = useState("");
 
     return (
         <div>
             <div>
                 <Navigation />
             </div>
-            <h1>
-                {errorMsg}
-            </h1>
+            <div className="container">
+                <form>
+                    <h5>Job Title:</h5>
+                    <input value={jobData.title}
+                        onChange={e => setJobData({
+                            ...jobData,
+                            title: e.target.value
+                        })} required></input>
+                    <h5>Company Name:</h5>
+                    <input value={jobData.companyName}
+                        onChange={e => setJobData({
+                            ...jobData,
+                            companyName: e.target.value
+                        })} required></input>
 
-            <h5>Job Title:</h5>
-            <input value={jobData.title}
-                onChange={e => setJobData({
-                    ...jobData,
-                    title: e.target.value
-                })}></input>
-            <h5>Company Name:</h5>
-            <input value={jobData.companyName}
-                onChange={e => setJobData({
-                    ...jobData,
-                    companyName: e.target.value
-                })}></input>
+                    <h5>Location:</h5>
+                    <input value={jobData.location}
+                        onChange={e => setJobData({
+                            ...jobData,
+                            location: e.target.value
+                        })} required></input>
+                    <h5>Description:</h5>
+                    <input value={jobData.description}
+                        onChange={e => setJobData({
+                            ...jobData,
+                            description: e.target.value
+                        })} required></input>
+                    <h5>Contact:</h5>
+                    <input value={jobData.contact}
+                        onChange={e => setJobData({
+                            ...jobData,
+                            contact: e.target.value
+                        })} required></input>
+                    <h5>Website:</h5>
+                    <input value={jobData.website}
+                        onChange={e => setJobData({
+                            ...jobData,
+                            website: e.target.value
+                        })}></input>
+                    <div></div>
+                    {displaySubmit()}
+                </form>
+            </div>
 
-            <h5>Location:</h5>
-            <input value={jobData.location}
-                onChange={e => setJobData({
-                    ...jobData,
-                    location: e.target.value
-                })}></input>
-            <h5>Description:</h5>
-            <input value={jobData.description}
-                onChange={e => setJobData({
-                    ...jobData,
-                    description: e.target.value
-                })}></input>
-            <h5>Contact:</h5>
-            <input value={jobData.contact}
-                onChange={e => setJobData({
-                    ...jobData,
-                    contact: e.target.value
-                })}></input>
-            <h5>Website:</h5>
-            <input value={jobData.website}
-                onChange={e => setJobData({
-                    ...jobData,
-                    website: e.target.value
-                })}></input>
-            {displaySubmit()}
         </div>
     );
 }

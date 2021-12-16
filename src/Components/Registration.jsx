@@ -15,13 +15,23 @@ export default function Registration() {
         password: '',
         username: '',
     });
+    const [errorMsg, setErrorMsg] = useState("");
+
+    function displayErrorMsg() {
+        if (errorMsg.length > 0) {
+            return (<div className="alert alert-warning">
+                {errorMsg}
+            </div>);
+        }
+    }
 
     return (
         <div>
             <div>
                 <Navigation />
             </div>
-            <div className="form-container">
+            <div className="container">
+                {displayErrorMsg()}
                 <h1>Register</h1>
                 <h5>
                     Username:
@@ -43,58 +53,16 @@ export default function Registration() {
                         ...userData,
                         password: password
                     })
-                }} />
+                }} required />
                 <button onClick={() => {
                     axios.post('/api/user/register', userData)
                         .then(response => {
                             navigate(originalPath);
-                            console.log("lol");
                             console.log(response);
                         })
-                        .catch(error => console.log(error));
+                        .catch(error => { setErrorMsg(error.response.data); console.log(error) });
                 }}>Register</button>
             </div>
         </div>
     );
 }
-
- /* <form className="container">
-            // TODO: why li cannot work
-                <div className="form-container">
-                    <h1>Register</h1>
-                    <li>
-                        <label>
-                            Username:
-                        </label>
-                        <input name="username" id="username" onChange={(e) => {
-                            const username = e.target.value;
-                            setUserData({
-                                ...userData,
-                                username: username
-                            });
-
-                        }} />
-                    </li>
-                    <li>
-                        <label>
-                            Password:
-                        </label>
-                        <input type="password" id="password" onChange={(e) => {
-                            const password = e.target.value;
-                            setUserData({
-                                ...userData,
-                                password: password
-                            })
-                        }} />
-                    </li>
-                    <button onClick={() => {
-                        axios.post('/api/user/register', userData)
-                            .then(response => {
-                                navigate("/favorites");
-                                console.log("lol");
-                                console.log(response);
-                            })
-                            .catch(error => console.log(error));
-                    }}>Register</button>
-                </div>
-            </form> */
