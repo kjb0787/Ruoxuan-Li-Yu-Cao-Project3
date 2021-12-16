@@ -45,7 +45,7 @@ router.put('/:id', authenticateToken, async (req, res) => {
     job.postDate = new Date().toISOString().slice(0, 10);
     const updatedJob = await job.save();
     if (updatedJob) {
-        return res.status(201).send(job);
+        return res.status(201).send({ jobId: job._id });
     } else {
         return res.status(500).send({ message: "Can't update job information." });
     }

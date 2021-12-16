@@ -118,7 +118,7 @@ export default function JobDetail() {
                     {displayDelete()}
                 </Card.Body>
                 <Card.Body>
-                    <Card.Link href={job.website}>Website: {job.website}</Card.Link>
+                    Website: <Card.Link href={job.website}>{job.website}</Card.Link>
                 </Card.Body>
                 <Card.Footer className="text-muted">PostDate: {job.postDate}</Card.Footer>
             </Card>

@@ -2,6 +2,8 @@ import axios from "axios";
 import { useState } from "react";
 import { Navigation } from "./Navigation";
 import { useNavigate } from 'react-router';
+import "./Container.css"
+import Button from 'react-bootstrap/Button'
 
 export default function SignIn() {
     // const location = useLocation();
@@ -28,7 +30,7 @@ export default function SignIn() {
             <div>
                 <Navigation />
             </div>
-            <div className="container">
+            <div className="inputContainer">
                 {displayErrorMsg()}
                 <h1>Sign in</h1>
                 <h5>
@@ -52,7 +54,7 @@ export default function SignIn() {
                     })
                 }} />
                 <div></div>
-                <button onClick={() => {
+                <Button className="button" onClick={() => {
                     axios.post('/api/user/signin', userData)
                         .then(response => {
                             if (response.data.token) {
@@ -63,7 +65,7 @@ export default function SignIn() {
                             navigate('/')
                         })
                         .catch(error => { setErrorMsg(error.response.data); console.log(error) });
-                }}>Sign in</button>
+                }}>Sign in</Button>
             </div>
         </div>
     );

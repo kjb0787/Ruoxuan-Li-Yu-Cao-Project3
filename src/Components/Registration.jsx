@@ -3,6 +3,9 @@ import React, { useState } from "react";
 import { Navigation } from "./Navigation";
 import { useNavigate } from 'react-router';
 import { useLocation } from 'react-router';
+import Button from 'react-bootstrap/Button'
+import "./Container.css"
+
 
 export default function Registration() {
     const navigate = useNavigate();
@@ -30,7 +33,7 @@ export default function Registration() {
             <div>
                 <Navigation />
             </div>
-            <div className="container">
+            <div className="inputContainer">
                 {displayErrorMsg()}
                 <h1>Register</h1>
                 <h5>
@@ -54,14 +57,16 @@ export default function Registration() {
                         password: password
                     })
                 }} required />
-                <button onClick={() => {
-                    axios.post('/api/user/register', userData)
-                        .then(response => {
-                            navigate(originalPath);
-                            console.log(response);
-                        })
-                        .catch(error => { setErrorMsg(error.response.data); console.log(error) });
-                }}>Register</button>
+                <div>
+                    <Button className="button" onClick={() => {
+                        axios.post('/api/user/register', userData)
+                            .then(response => {
+                                navigate(originalPath);
+                                console.log(response);
+                            })
+                            .catch(error => { setErrorMsg(error.response.data); console.log(error) });
+                    }}>Register</Button>
+                </div>
             </div>
         </div>
     );

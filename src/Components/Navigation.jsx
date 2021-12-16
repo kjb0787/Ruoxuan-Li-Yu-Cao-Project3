@@ -1,5 +1,4 @@
 import React from 'react';
-// import { Link } from "react-router-dom";
 import { Navbar, Nav, Container } from 'react-bootstrap';
 import { useNavigate } from 'react-router';
 
@@ -44,7 +43,6 @@ export function Navigation() {
                 }}>{username ? username.replace(/"/g, "") : 'Register'}</Nav.Link>
                 <Nav.Link onClick={() => {
                     if (username) {
-                        // TODO: log out
                         localStorage.removeItem("loggedIn");
                         localStorage.removeItem("username");
                         navigateTo('/signin');

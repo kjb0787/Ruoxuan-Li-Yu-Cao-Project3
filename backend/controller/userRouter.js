@@ -45,7 +45,6 @@ router.get('/favorites', authenticateToken, async (req, res) => {
     if (!user) {
         return res.status(401).send("Unauthorized");
     }
-    // todo: add json format of job lists
     const jobs = [];
     for (let i = 0; i < user.favorites.length; i++) {
         jobs.push(await Job.findOne({ _id: user.favorites[i] }));
@@ -59,7 +58,6 @@ router.get('/posts', authenticateToken, async (req, res) => {
     if (!user) {
         return res.status(401).send("Unauthorized");
     }
-    // todo: add json format of job lists
     return res.status(200).send(user.jobPosts);
 })
 
